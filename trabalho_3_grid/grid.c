@@ -35,14 +35,11 @@ int main(){
 float condicao_principal = (10f/100f) * pow(ordem_da_matriz, 2);
 float verifica_condicao_principal = 0;
 
-do{ // Preencher 10% de ordem_da_matriz^2 vezes
 
+    //escolher um elemento na matriz de forma aleatoria -> condicao 2
 
-    //escolher um elemnto na matriz de forma aleatoria -> condicao 2
-
-    int bool_condicao2 = 1; // true
-
-    do{ // condicao 2
+    condicao2:
+    if(verifica_condicao_principal <= condicao_principal){
 
       do{ // escolher um elemnto na matriz de forma aleatoria
         srand(time(NULL));
@@ -52,20 +49,53 @@ do{ // Preencher 10% de ordem_da_matriz^2 vezes
       }while(matriz[elemento][elemento] != 0;) // repete ate que ache um elemento na matriz que nao seja o central, que e igual a 1
 
       // escolher um numero de 1 a 4 aleatoriamente -> condicao 3
-
+      condicao3:
       srand(time(NULL));
 
       int random_number = rand() % 4 + 1; //random number from 1 up to 4
 
       switch(random_number){
         case 1: // go right
+          if(elemento == ordem_da_matriz-1){ // elemento na beirada da linha
+            if(matriz[elemento][elemento-elemento] == 0){
+              goto condicao3;
 
+            }
+            else{ // matriz = 1
+              matriz[elemento][elemento] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+
+            } // end else matriz = 1
+
+          }// end if elemento na beirada da linha
+          else{
+            if(matriz[elemento][elemento+1] == 0){ // o proximo a direita e 0 ?
+              goto condicao3;
+            }// end if o proximo a direita e 0 ?
+            else{
+              matriz[elemento][elemento] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }// end else o proximo a direita nao e 0
+          } // end caso 1
 
           break;
         case 2: // go up
 
+          if(elemento == 0){ // estamos na primeira linha ?
+
+          }// end if estamos na primeira linha
+          else{
+
+          }
+
           break;
         case 3: // go left
+
+          if(elemento == 0){ // estamos na primeira coluna ?
+
+          }// end if estamos na primeira coluna
 
           break;
         case 4: // go down
@@ -76,11 +106,14 @@ do{ // Preencher 10% de ordem_da_matriz^2 vezes
           break;
         }// end switch random_number
 
+    }// end if condicao_principal atendida
+    else{
+      printf("10%% da ordem da matriz ao quadrado totalmente preenchido\n\n");
+    }
 
-      }while(bool_condicao2)//end of do while condicao 2
+/* IMPRIMA EM UM ARQUIVO.DAT */
+//implementar
 
-
-}while(verifica_condicao_principal <= condicao_principal)// end do while condicao principal -> Preencher 10% de ordem_da_matriz^2 vezes
 
   /* FIM */
 
