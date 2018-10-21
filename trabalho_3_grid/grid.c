@@ -96,9 +96,19 @@ float verifica_condicao_principal = 0;
           if(elemento == 0){ // estamos na primeira coluna ?
 
           }// end if estamos na primeira coluna
+          else{
+
+          }
 
           break;
         case 4: // go down
+
+          if(elemento == ordem_da_matriz-1){ // estamos na ultima linha ?
+
+          } // end if estamos na ultima linha ?
+          else{
+            
+          }
 
           break;
         default:
