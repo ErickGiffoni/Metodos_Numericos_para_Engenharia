@@ -84,11 +84,26 @@ float verifica_condicao_principal = 0;
         case 2: // go up
 
           if(elemento == 0){ // estamos na primeira linha ?
+            if(matriz[elemento+ordem_da_matriz-1][elemento] == 0){ //olhamos a posicao [8][0], mesma coluna
+              goto condicao3;
+            }// end if olhamos a posicao [8][0], mesma coluna
+            else{
+              matriz[elemento][elemento] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }// olhamos a posicao [8][0], mesma coluna e é 1
 
           }// end if estamos na primeira linha
           else{
-
-          }
+            if(matriz[elemento+1][elemento] == 0){// elemento de cima e 0 ?
+              goto condicao3;
+            }// end if  elemento de cima e 0
+            else{ // == 1
+              matriz[elemento][elemento] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }// end else elemento de cima nao e 0
+          }// end caso 2
 
           break;
         case 3: // go left
@@ -98,7 +113,7 @@ float verifica_condicao_principal = 0;
           }// end if estamos na primeira coluna
           else{
 
-          }
+          }//end caso 3
 
           break;
         case 4: // go down
@@ -107,8 +122,8 @@ float verifica_condicao_principal = 0;
 
           } // end if estamos na ultima linha ?
           else{
-            
-          }
+
+          }//end caso 4
 
           break;
         default:
