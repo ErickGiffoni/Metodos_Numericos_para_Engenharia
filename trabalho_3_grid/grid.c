@@ -141,8 +141,22 @@ float verifica_condicao_principal = 0;
     }
 
 /* IMPRIMA EM UM ARQUIVO.DAT */
-//implementar
 
+  FILE *arquivo;
+do{
+  arquivo = fopen("arquivo.dat", "w");
+}while (arquivo == NULL);
+
+  for(int i = 0; i< ordem_da_matriz; i++){ //preencher o arquivo com os dados da posicao na matriz que estiver =1
+    for(int j =0; j< ordem_da_matriz; j++){
+      if(matriz[i][j] == 1){
+        fprintf(arquivo, "%d %d\n", i, j);
+      }
+      else continue;
+    }
+  }//end for preenche arquivo
+
+  fclose(arquivo);
 
   /* FIM */
 
