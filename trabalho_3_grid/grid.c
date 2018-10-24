@@ -5,14 +5,17 @@
 #include <math.h>
 #include <time.h>
 
-#define ordem_da_matriz 9 // a ordem deve ser impar, para termos um elemento central
+#define ordem_da_matriz 9 // a ordem deve ser impar, para termos um linha central
 
 int main(){
 
-  int elemento;
+  int linha, coluna;
   int random_number;
 
   int **matriz;
+
+  float condicao_principal = (10.0/100.0) * pow(ordem_da_matriz, 2);
+  float verifica_condicao_principal = 0;
 
   matriz = (int **)calloc(ordem_da_matriz, sizeof(int *)); //alocacao das linhas da matriz
 
@@ -20,9 +23,9 @@ int main(){
     matriz[i] = (int *) calloc(ordem_da_matriz, sizeof(int)); //alocacao das colunas da matriz
   }//end for aloca colunas
 
-  //matriz ja esta toda preenchida por zeros. Agora o elemento central[ordem_da_matriz/2][ordem_da_matriz/2] deve ser 1
+  //matriz ja esta toda preenchida por zeros. Agora o linha central[ordem_da_matriz/2][ordem_da_matriz/2] deve ser 1
 
-  matriz[ordem_da_matriz/2][ordem_da_matriz/2] = 1; // elemento na posicao [4][4] se a ordem = 9
+  matriz[ordem_da_matriz/2][ordem_da_matriz/2] = 1; // linha na posicao [4][4] se a ordem = 9
 
   /* Testes
   printf("%d\n", matriz[ordem_da_matriz/2][ordem_da_matriz/2]);
@@ -36,11 +39,9 @@ int main(){
 
   /* Condicao principal -> Preencher 10% de ordem_da_matriz^2 vezes */
 
-float condicao_principal = (10.0/100.0) * pow(ordem_da_matriz, 2);
-float verifica_condicao_principal = 0;
 
 
-    //escolher um elemento na matriz de forma aleatoria -> condicao 2
+    //escolher um linha na matriz de forma aleatoria -> condicao 2
 
     condicao2:
     if(verifica_condicao_principal <= condicao_principal){
@@ -48,9 +49,11 @@ float verifica_condicao_principal = 0;
       do{ // escolher um elemnto na matriz de forma aleatoria
         srand(time(NULL));
 
-        elemento = rand() % ordem_da_matriz; // random number from 0 up to 8 if order = 9
+        linha = rand() % ordem_da_matriz; // random number from 0 up to 8 if order = 9
+        srand(time(NULL));
+        coluna = rand() % ordem_da_matriz;
 
-      }while(matriz[elemento][elemento] != 0); // repete ate que ache um elemento na matriz que nao seja o central, que e igual a 1
+      }while(matriz[linha][coluna] != 0); // repete ate que ache um linha na matriz que nao seja o central, que e igual a 1
 
       // escolher um numero de 1 a 4 aleatoriamente -> condicao 3
     condicao3:
@@ -60,25 +63,26 @@ float verifica_condicao_principal = 0;
 
       switch(random_number){
         case 1: // go right
-          if(elemento == ordem_da_matriz-1){ // elemento na beirada da linha
-            if(matriz[elemento][elemento-elemento] == 0){
+          if(coluna == ordem_da_matriz-1){ // linha na beirada da linha
+            if(matriz[linha][0] == 0){
+              coluna=0;
               goto condicao3;
-
             }
             else{ // matriz = 1
-              matriz[elemento][elemento] = 1;
+              matriz[linha][coluna] = 1;
               verifica_condicao_principal ++;
               goto condicao2;
 
             } // end else matriz = 1
 
-          }// end if elemento na beirada da linha
+          }// end if linha na beirada da linha
           else{
-            if(matriz[elemento][elemento+1] == 0){ // o proximo a direita e 0 ?
+            if(matriz[linha][coluna+1] == 0){ // o proximo a direita e 0 ?
+              coluna=coluna+1;
               goto condicao3;
             }// end if o proximo a direita e 0 ?
             else{
-              matriz[elemento][elemento] = 1;
+              matriz[linha][coluna] = 1;
               verifica_condicao_principal ++;
               goto condicao2;
             }// end else o proximo a direita nao e 0
@@ -87,55 +91,90 @@ float verifica_condicao_principal = 0;
           break;
         case 2: // go up
 
-          if(elemento == 0){ // estamos na primeira linha ?
-            if(matriz[elemento+ordem_da_matriz-1][elemento] == 0){ //olhamos a posicao [8][0], mesma coluna
+          if(linha == 0){ // estamos na primeira linha ?
+            if(matriz[ordem_da_matriz-1][coluna] == 0){ //olhamos a posicao [8][0], mesma coluna
+              linha=ordem_da_matriz-1;
               goto condicao3;
             }// end if olhamos a posicao [8][0], mesma coluna
             else{
-              matriz[elemento][elemento] = 1;
+              matriz[linha][coluna] = 1;
               verifica_condicao_principal ++;
               goto condicao2;
             }// olhamos a posicao [8][0], mesma coluna e é 1
 
           }// end if estamos na primeira linha
           else{
-            if(matriz[elemento+1][elemento] == 0){// elemento de cima e 0 ?
+            if(matriz[linha-1][coluna] == 0){// linha de cima e 0 ?
+              linha=linha-1;
               goto condicao3;
-            }// end if  elemento de cima e 0
+            }// end if  linha de cima e 0
             else{ // == 1
-              matriz[elemento][elemento] = 1;
+              matriz[linha][coluna] = 1;
               verifica_condicao_principal ++;
               goto condicao2;
-            }// end else elemento de cima nao e 0
+            }// end else linha de cima nao e 0
           }// end caso 2
 
           break;
         case 3: // go left
 
-          if(elemento == 0){ // estamos na primeira coluna ?
-
-          }// end if estamos na primeira coluna
+          if(coluna == 0){
+            if(matriz[linha][ordem_da_matriz-1] == 0){
+              coluna=ordem_da_matriz-1;
+              goto condicao3;
+            }
+            else{
+              matriz[linha][coluna] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }
+          }
           else{
-
-          }//end caso 3
+            if(matriz[linha][coluna-1] == 0){
+              coluna=coluna-1;
+              goto condicao3;
+            }
+            else{
+              matriz[linha][coluna] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }
+          }
 
           break;
         case 4: // go down
 
-          if(elemento == ordem_da_matriz-1){ // estamos na ultima linha ?
-
-          } // end if estamos na ultima linha ?
+          if(linha == ordem_da_matriz-1){
+            if(matriz[0][coluna] == 0){
+              linha=0;
+              goto condicao3;
+            }
+            else{
+              matriz[linha][coluna] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }
+          }
           else{
-
-          }//end caso 4
+            if(matriz[linha+1][coluna] == 0){// linha de cima e 0 ?
+              linha=linha+1;
+              goto condicao3;
+            }
+            else{
+              matriz[linha][coluna] = 1;
+              verifica_condicao_principal ++;
+              goto condicao2;
+            }
+          }
 
           break;
         default:
           printf("Erro na aleatoriedade dos numeros\n\n");
           break;
-        }// end switch random_number
+        }
 
-    }// end if condicao_principal atendida
+    }
+
     else{
       printf("10%% da ordem da matriz ao quadrado totalmente preenchido\n\n");
     }
@@ -154,7 +193,7 @@ do{
       }
       else continue;
     }
-  }//end for preenche arquivo
+  }
 
   fclose(arquivo);
 
