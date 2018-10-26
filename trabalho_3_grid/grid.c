@@ -19,6 +19,7 @@ int main(){
   int **matriz;
 
   int dez_por_cento = (0.1) * pow(ordem_da_matriz, 2);
+    printf("%d\n\n",dez_por_cento);
   int porcentagem = 0;
 
   matriz = (int **)calloc(ordem_da_matriz, sizeof(int *)); //alocacao das linhas da matriz
@@ -32,16 +33,16 @@ int main(){
   matriz[ordem_da_matriz/2][ordem_da_matriz/2] = 1; // linha na posicao [4][4] se a ordem = 9
 
   /* Testes
-  printf("%d\n", matriz[ordem_da_matriz/2][ordem_da_matriz/2]);
+  //printf("%d\n", matriz[ordem_da_matriz/2][ordem_da_matriz/2]);
   for(int i=0; i<ordem_da_matriz; i++){
     for(int j =0; j<ordem_da_matriz; j++){
-      printf("%d ", matriz[i][j]);
+      //printf("%d ", matriz[i][j]);
     }
-    printf("\n");
+    //printf("\n");
   }
   */
 
-  /* Condicao principal -> Preencher 10% de ordem_da_matriz^2 vezes */
+  /* Condicao //principal -> Preencher 10% de ordem_da_matriz^2 vezes */
 
   FILE *arquivo;
   do{
@@ -69,7 +70,7 @@ int main(){
     //if(1){
 
       random_number = rand() % 4 + 1; //random number from 1 up to 4
-      //printf("rand\t%d\n",random_number);
+      ////printf("rand\t%d\n",random_number);
 
       switch(random_number){
         case 1: // go right
@@ -80,8 +81,8 @@ int main(){
             }
             else{ // matriz = 1
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
 
@@ -95,8 +96,8 @@ int main(){
             }// end if o proximo a direita e 0 ?
             else{
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }// end else o proximo a direita nao e 0
@@ -112,8 +113,8 @@ int main(){
             }// end if olhamos a posicao [8][0], mesma coluna
             else{
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }// olhamos a posicao [8][0], mesma coluna e é 1
@@ -127,8 +128,8 @@ int main(){
             }// end if  linha de cima e 0
             else{ // == 1
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }// end else linha de cima nao e 0
@@ -145,8 +146,8 @@ int main(){
             }
             else{
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }
@@ -158,8 +159,8 @@ int main(){
             }
             else{
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }
@@ -175,8 +176,8 @@ int main(){
             }
             else{
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }
@@ -188,8 +189,8 @@ int main(){
             }
             else{
               matriz[linha][coluna] = 1;
-              porcentagem ++;
-              printf("%d %d\n", linha, coluna);
+              porcentagem++;printf("%d\n",porcentagem);
+              fprintf(arquivo, "%d %d\n", linha, coluna);
 
               goto condicao2;
             }
@@ -197,7 +198,7 @@ int main(){
 
           break;
         default:
-          printf("Erro na aleatoriedade dos numeros\n\n");
+          //printf("Erro na aleatoriedade dos numeros\n\n");
           break;
         }
 
@@ -205,7 +206,7 @@ int main(){
   }
 
     else{
-      printf("10%% da ordem da matriz ao quadrado totalmente preenchido\n\n");
+      //printf("10%% da ordem da matriz ao quadrado totalmente preenchido\n\n");
     }
 
 /* IMPRIMA EM UM ARQUIVO.DAT */
@@ -217,7 +218,7 @@ do{
   for(int i = 0; i< ordem_da_matriz; i++){ //preencher o arquivo com os dados da posicao na matriz que estiver =1
     for(int j =0; j< ordem_da_matriz; j++){
       if(matriz[i][j] == 1){
-        printf("%d %d\n", i, j);
+        //printf("%d %d\n", i, j);
       }
       else continue;
     }
