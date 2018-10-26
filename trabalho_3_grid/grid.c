@@ -18,8 +18,9 @@ int main(){
 
   int **matriz;
 
-  int condicao_principal = (10.0/100.0) * pow(ordem_da_matriz, 2);
-  int verifica_condicao_principal = 0;
+  int dez_por_cento = (0.1) * pow(ordem_da_matriz, 2);
+    printf("10%% do quadrado da ordem da matriz e %d\n\n",dez_por_cento);
+  int porcentagem = 0;
 
   matriz = (int **)calloc(ordem_da_matriz, sizeof(int *)); //alocacao das linhas da matriz
 
@@ -32,16 +33,16 @@ int main(){
   matriz[ordem_da_matriz/2][ordem_da_matriz/2] = 1; // linha na posicao [4][4] se a ordem = 9
 
   /* Testes
-  printf("%d\n", matriz[ordem_da_matriz/2][ordem_da_matriz/2]);
+  //printf("%d\n", matriz[ordem_da_matriz/2][ordem_da_matriz/2]);
   for(int i=0; i<ordem_da_matriz; i++){
     for(int j =0; j<ordem_da_matriz; j++){
-      printf("%d ", matriz[i][j]);
+      //printf("%d ", matriz[i][j]);
     }
-    printf("\n");
+    //printf("\n");
   }
   */
 
-  /* Condicao principal -> Preencher 10% de ordem_da_matriz^2 vezes */
+  /* Condicao //principal -> Preencher 10% de ordem_da_matriz^2 vezes */
 
   FILE *arquivo;
   do{
@@ -52,36 +53,36 @@ int main(){
     //escolher um linha na matriz de forma aleatoria -> condicao 2
 
     condicao2:
-    if(verifica_condicao_principal <= condicao_principal){
+    if(porcentagem <= dez_por_cento){
+    //if(1){
 
       do{ // escolher um elemnto na matriz de forma aleatoria
-        srand(time(NULL));
 
+        srand(time(NULL));
         linha = rand() % ordem_da_matriz; // random number from 0 up to 8 if order = 9
-        //srand(time(NULL));
+
         coluna = rand() % ordem_da_matriz;
 
       }while(matriz[linha][coluna] != 0); // repete ate que ache um linha na matriz que nao seja o central, que e igual a 1
 
       // escolher um numero de 1 a 4 aleatoriamente -> condicao 3
     condicao3:
-    if(verifica_condicao_principal <= condicao_principal){
-      //srand(time(NULL));
+    if(porcentagem <= dez_por_cento){
+    //if(1){
 
       random_number = rand() % 4 + 1; //random number from 1 up to 4
+      ////printf("rand\t%d\n",random_number);
 
       switch(random_number){
         case 1: // go right
           if(coluna == ordem_da_matriz-1){ // linha na beirada da linha
             if(matriz[linha][0] == 0){
               coluna=0;
-              verifica_condicao_principal ++;
               goto condicao3;
             }
             else{ // matriz = 1
               matriz[linha][coluna] = 1;
-              printf("Found !!! \n");
-              verifica_condicao_principal ++;
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -93,13 +94,11 @@ int main(){
           else{
             if(matriz[linha][coluna+1] == 0){ // o proximo a direita e 0 ?
               coluna=coluna+1;
-              verifica_condicao_principal ++;
               goto condicao3;
             }// end if o proximo a direita e 0 ?
             else{
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -113,15 +112,11 @@ int main(){
           if(linha == 0){ // estamos na primeira linha ?
             if(matriz[ordem_da_matriz-1][coluna] == 0){ //olhamos a posicao [8][0], mesma coluna
               linha=ordem_da_matriz-1;
-              verifica_condicao_principal ++;
-              //fprintf(arquivo, "%d %d\n", linha, coluna);
-
               goto condicao3;
             }// end if olhamos a posicao [8][0], mesma coluna
             else{
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -132,13 +127,12 @@ int main(){
           else{
             if(matriz[linha-1][coluna] == 0){// linha de cima e 0 ?
               linha=linha-1;
-              verifica_condicao_principal ++;
+
               goto condicao3;
             }// end if  linha de cima e 0
             else{ // == 1
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -152,13 +146,12 @@ int main(){
           if(coluna == 0){
             if(matriz[linha][ordem_da_matriz-1] == 0){
               coluna=ordem_da_matriz-1;
-              verifica_condicao_principal ++;
+
               goto condicao3;
             }
             else{
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -168,13 +161,11 @@ int main(){
           else{
             if(matriz[linha][coluna-1] == 0){
               coluna=coluna-1;
-              verifica_condicao_principal ++;
               goto condicao3;
             }
             else{
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -188,13 +179,11 @@ int main(){
           if(linha == ordem_da_matriz-1){
             if(matriz[0][coluna] == 0){
               linha=0;
-              verifica_condicao_principal ++;
               goto condicao3;
             }
             else{
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -204,13 +193,11 @@ int main(){
           else{
             if(matriz[linha+1][coluna] == 0){// linha de cima e 0 ?
               linha=linha+1;
-              verifica_condicao_principal ++;
               goto condicao3;
             }
             else{
               matriz[linha][coluna] = 1;
-              verifica_condicao_principal ++;
-              printf("Found !!! \n");
+              porcentagem++;printf("%d\n",porcentagem);
               fprintf(arquivo, "%d %d\n", linha, coluna);
               printf("%d %d\n", linha, coluna);
 
@@ -220,7 +207,7 @@ int main(){
 
           break;
         default:
-          printf("Erro na aleatoriedade dos numeros\n\n");
+          //printf("Erro na aleatoriedade dos numeros\n\n");
           break;
         }
 
@@ -231,7 +218,7 @@ int main(){
   }
 
     else{
-      printf("10%% da ordem da matriz ao quadrado totalmente preenchido - > if de fora\n\n");
+      printf("10%% da ordem da matriz ao quadrado totalmente preenchido\n\n");
     }
 
 /* IMPRIMA EM UM ARQUIVO.DAT */
@@ -240,11 +227,10 @@ int main(){
 do{
   arquivo = fopen("arquivo.dat", "w");
 }while (arquivo == NULL);
-
   for(int i = 0; i< ordem_da_matriz; i++){ //preencher o arquivo com os dados da posicao na matriz que estiver =1
     for(int j =0; j< ordem_da_matriz; j++){
       if(matriz[i][j] == 1){
-        fprintf(arquivo, "%d %d\n", i, j);
+        //printf("%d %d\n", i, j);
       }
       else continue;
     }
@@ -252,11 +238,16 @@ do{
 */
   fclose(arquivo);
 
+  FILE *gpl = fopen("grid.gpl", "w");
+  fprintf(gpl, "plot 'arquivo.dat' u 1:2 w p");
+  fclose(gpl);
+
+  system("gnuplot grid.gpl");
+
   /* FIM */
 
   free(matriz); // desalocacao da matriz
 
-  printf("Condicao principal : %d\nVerifica condicao : %d\n", condicao_principal, verifica_condicao_principal);
 
   return 0;
 }
