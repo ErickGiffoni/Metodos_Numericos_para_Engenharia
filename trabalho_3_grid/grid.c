@@ -239,10 +239,11 @@ do{
   fclose(arquivo);
 
   FILE *gpl = fopen("grid.gpl", "w");
-  fprintf(gpl, "plot 'arquivo.dat' u 1:2 w p");
+  fprintf(gpl, "plot 'arquivo.dat' u 1:2 w p\npause -1");
   fclose(gpl);
 
   system("gnuplot grid.gpl");
+  //system("pause");
 
   /* FIM */
 
